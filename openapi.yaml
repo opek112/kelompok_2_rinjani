@@ -339,7 +339,4 @@ components:
           example: "error"
         message:
           type: string
-          example: "Peralatan sewa tidak ditemukan"
-
-
-          matkullllll
+          example: "tidak ada alat"
