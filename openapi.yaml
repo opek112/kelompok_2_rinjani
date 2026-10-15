@@ -339,7 +339,13 @@ components:
           example: "error"
         message:
           type: string
+<<<<<<< HEAD
           example: "Peralatan sewa tidak ditemukan"
 
 
           matkullllll
+          rokok samporna
+=======
+          example: "tidak alat tersedia"
+>>>>>>> main
+>>>>>>> 8916aaf7a27f8aecd2cd1a9107f3b8bba29a7bbd
