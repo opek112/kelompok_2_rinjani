@@ -7,52 +7,97 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# 👥 Profil Kelompok
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2563EB,100:7C3AED&height=180&section=header&text=Team%20Project&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Kolaborasi%20%7C%20Inovasi%20%7C%20Teknologi&descAlignY=55&descSize=16" width="100%" />
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <b>Politeknik Negeri Banyuwangi</b><br>
+  Program Studi Teknologi Rekayasa Perangkat Lunak
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📌 Tentang Kelompok
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Kami adalah kelompok mahasiswa Teknologi Rekayasa Perangkat Lunak di Politeknik Negeri Banyuwangi yang bekerja sama dalam mengembangkan pengetahuan dan keterampilan di bidang teknologi informasi dan pengembangan perangkat lunak.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Repository ini digunakan sebagai tempat kolaborasi, dokumentasi, pengelolaan kode program, dan pengumpulan hasil pengerjaan tugas kelompok.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 👨‍💻 Anggota Kelompok
 
-## Agentic Development
+| No. | Nama Anggota | NIM | Peran |
+|:---:|---|---|---|
+| 1 | Nama Anggota 1 | NIM Anggota 1 | Project Coordinator |
+| 2 | Nama Anggota 2 | NIM Anggota 2 | Developer |
+| 3 | Nama Anggota 3 | NIM Anggota 3 | Developer |
+| 4 | Nama Anggota 4 | NIM Anggota 4 | Documentation & Testing |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+*Pembagian peran dapat disesuaikan dengan kebutuhan dan kesepakatan kelompok.*
 
-```bash
-composer require laravel/boost --dev
+## 🎯 Tujuan Proyek
 
-php artisan boost:install
+- Menerapkan materi perkuliahan ke dalam proyek nyata.
+- Melatih kerja sama dan komunikasi dalam tim.
+- Menerapkan version control menggunakan Git dan GitHub.
+- Mengembangkan solusi perangkat lunak sesuai kebutuhan proyek.
+- Mendokumentasikan proses pengembangan secara terstruktur.
+
+## 🛠️ Teknologi yang Digunakan
+
+Teknologi yang digunakan akan disesuaikan dengan kebutuhan proyek.
+
+- **Programming Language:** [Bahasa Pemrograman]
+- **Framework:** [Framework]
+- **Database:** [Database]
+- **Version Control:** Git & GitHub
+- **Development Tools:** [Tools yang Digunakan]
+
+## 📂 Struktur Repository
+
+```text
+repository-kelompok/
+├── README.md
+├── docs/
+│   └── dokumentasi-proyek.md
+├── src/
+│   └── source-code/
+├── database/
+│   └── database.sql
+└── screenshots/
+    └── hasil-implementasi.png
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+*Struktur di atas merupakan contoh dan dapat diubah sesuai kebutuhan proyek.*
 
-## Contributing
+## 🔄 Alur Kolaborasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Membuat atau mengambil salinan repository.
+2. Membuat branch untuk fitur atau pekerjaan masing-masing.
+3. Melakukan perubahan dan pengujian kode.
+4. Menyimpan perubahan melalui commit dengan pesan yang jelas.
+5. Mengirim perubahan ke GitHub melalui push.
+6. Melakukan review dan menggabungkan perubahan ke branch utama.
 
-## Code of Conduct
+## 📋 Informasi Proyek
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Keterangan | Detail |
+|---|---|
+| Institusi | Politeknik Negeri Banyuwangi |
+| Program Studi | Teknologi Rekayasa Perangkat Lunak |
+| Nama Proyek | [Nama Proyek] |
+| Mata Kuliah | [Nama Mata Kuliah] |
+| Tahun Akademik | 2026/2027 |
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<p align="center">
+  <b>Built with teamwork and a little bit of debugging.</b><br>
+  <i>One team, four minds, one goal.</i>
+</p>
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:2563EB,100:7C3AED&height=100&section=footer" width="100%" />
+</p>

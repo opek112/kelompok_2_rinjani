@@ -1,6 +1,1 @@
-tes bismillahdsfvbhnjmk,
-
-opo wes
-
-
-vdjekhcekbcenkhcvev
+m
