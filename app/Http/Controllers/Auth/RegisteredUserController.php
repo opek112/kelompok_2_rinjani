@@ -28,18 +28,23 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        // 1. Ubah bagian validasi ini:
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'nama' => ['required', 'string', 'max:255'], // Ganti 'name' jadi 'nama'
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'no_telepon' => ['required', 'string', 'max:20'], // Tambahkan ini
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // 2. Ubah bagian create ini:
         $user = User::create([
-            'nama' => $request->name,
+            'nama' => $request->nama, // Ganti $request->name jadi $request->nama
             'email' => $request->email,
+            'no_telepon' => $request->no_telepon, // Tambahkan ini
             'password' => Hash::make($request->password),
+            'peran' => 'customer', // Tambahkan ini agar otomatis jadi customer
         ]);
 
         event(new Registered($user));
