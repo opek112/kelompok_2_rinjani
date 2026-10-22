@@ -18,7 +18,7 @@
     <div class="min-h-screen flex">
         
         <!-- KIRI: Bagian Gambar & Info (Sembunyikan di HP) -->
-        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 text-white flex-col justify-between p-12 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518182170546-076616fdfaaf?q=80&w=1000&auto=format&fit=crop');">
+        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 text-white flex-col justify-between p-12 bg-cover bg-center" style="background-image: url('https://statik.tempo.co/data/2018/11/26/id_799732/799732_720.jpg');">
             <!-- Overlay gelap -->
             <div class="absolute inset-0 bg-black/60"></div>
             
@@ -54,7 +54,7 @@
                     <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">R</div>
                     <div>
                         <h2 class="text-xl font-bold text-gray-800">RinjaniGuide</h2>
-                        <p class="text-[10px] text-gray-500 tracking-widest">TREK & RENTAL SERVICE</p>
+                        <p class="text-[10px] text-gray-500 tracking-widest">Guide & Rental Service</p>
                     </div>
                     <span class="ml-auto text-xs font-semibold border border-gray-300 rounded px-2 py-1 text-gray-600">Registrasi Pendaki</span>
                 </div>
