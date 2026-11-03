@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 // ==========================================
 // 1. HALAMAN UTAMA (LANDING PAGE)
 // ==========================================
 Route::get('/', function () {
-    // Mengarah ke welcome.blade.php (landing page sebelum login)
     return view('welcome'); 
 })->name('home');
 
@@ -46,26 +46,35 @@ Route::get('/syarat-ketentuan', function () {
 })->name('syarat-ketentuan');
 
 // ==========================================
-// 4. HALAMAN SETELAH LOGIN (CUSTOMER DASHBOARD)
+// 4. RUTE SETELAH LOGIN (CUSTOMER & ADMIN)
 // ==========================================
-Route::get('/dashboard', function () {
-    // Ini adalah halaman beranda setelah customer login
-    // Pastikan Anda membuat file resources/views/dashboard.blade.php
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Semua rute di dalam grup ini wajib login (auth) dan email terverifikasi (verified)
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // --- Dashboard Customer ---
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-// ==========================================
-// 5. RUTE PROFILE BAWAAN LARAVEL BREEZE
-// ==========================================
-Route::middleware('auth')->group(function () {
+    // --- Dashboard Admin ---
+    Route::get('/admin/dashboard', function () {
+        // Karena sudah masuk grup auth, kita tidak perlu cek auth()->check() lagi
+        // Langsung cek perannya
+        if (Auth::user()->peran === 'admin') {
+            return view('admin-dashboard');
+        }
+        
+        // Kalau yang login bukan admin, kembalikan ke dashboard customer
+        return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman Admin!');
+    })->name('admin.dashboard');
+
+    // --- Profile ---
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // ==========================================
-// 6. RUTE AUTENTIKASI (LOGIN & REGISTER)
+// 5. RUTE AUTENTIKASI (LOGIN & REGISTER)
 // ==========================================
-// File ini otomatis dibuat oleh Laravel Breeze
-// Isinya: /login, /register, /forgot-password, /logout, dll.
 require __DIR__.'/auth.php';
