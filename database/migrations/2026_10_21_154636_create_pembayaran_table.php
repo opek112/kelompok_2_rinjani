@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('nominal', 12, 2);
 
             $table->enum('status_pembayaran', [
-                'pending', 'settlement', 'expire', 'failure'
+                'pending', 'settlement', 'expire', 'failure',
             ])->default('pending');
 
             $table->timestamp('kedaluwarsa_pada')->nullable();

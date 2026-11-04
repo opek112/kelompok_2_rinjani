@@ -42,7 +42,7 @@ return new class extends Migration
             $table->decimal('nominal_komisi', 12, 2)->nullable();
 
             $table->enum('status', [
-                'pending', 'paid', 'expired', 'completed', 'cancelled'
+                'pending', 'paid', 'expired', 'completed', 'cancelled',
             ])->default('pending');
 
             $table->timestamp('waktu_serah_terima')->nullable();
