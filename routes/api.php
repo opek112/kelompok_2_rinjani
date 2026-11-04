@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\EquipmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\EquipmentController;
 
 Route::get('/equipments', [EquipmentController::class, 'index']);
 Route::post('/equipments', [EquipmentController::class, 'store']);

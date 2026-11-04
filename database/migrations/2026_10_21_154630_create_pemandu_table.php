@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('tarif_harian', 12, 2);
             $table->text('info_rekening_bank')->nullable();
             $table->enum('status', [
-                'pending', 'active', 'rejected'
+                'pending', 'active', 'rejected',
             ])->default('pending');
             $table->timestamps();
         });

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tanggal');
 
             $table->enum('status', [
-                'available', 'booked', 'off'
+                'available', 'booked', 'off',
             ])->default('available');
 
             $table->foreignId('pemesanan_id')

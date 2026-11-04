@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('path_berkas_legalitas')->nullable();
             $table->text('info_rekening_bank')->nullable();
             $table->enum('status', [
-                'pending', 'active', 'rejected'
+                'pending', 'active', 'rejected',
             ])->default('pending');
             $table->timestamps();
         });

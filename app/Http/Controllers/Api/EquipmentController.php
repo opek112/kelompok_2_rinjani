@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Equipment;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class EquipmentController extends Controller
 {
     /**
@@ -19,9 +20,10 @@ class EquipmentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Daftar peralatan sewa berhasil diambil',
-            'data' => $equipments
+            'data' => $equipments,
         ], 200);
     }
+
     public function store(Request $request): JsonResponse
     {
         // 1. Validasi input
@@ -37,7 +39,7 @@ class EquipmentController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Validasi gagal',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
 
@@ -53,7 +55,7 @@ class EquipmentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Peralatan sewa berhasil ditambahkan',
-            'data' => $equipment
+            'data' => $equipment,
         ], 201);
     }
 }
