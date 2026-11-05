@@ -39,7 +39,7 @@ class AdminDashboardController extends Controller
         $aktivitasTerbaru = Pemesanan::latest()->take(3)->get();
 
         // 4. Lempar data ke view (admin-dashboard.blade.php)
-        return view('admin-dashboard', compact(
+        return view('admin.dashboard', compact(
             'totalTransaksi',
             'totalOmzet',
             'totalKomisi',
