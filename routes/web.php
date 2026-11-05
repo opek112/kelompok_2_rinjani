@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,16 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     // --- Dashboard Admin ---
-    Route::get('/admin/dashboard', function () {
-        // Karena sudah masuk grup auth, kita tidak perlu cek auth()->check() lagi
-        // Langsung cek perannya
-        if (Auth::user()->peran === 'admin') {
-            return view('admin-dashboard');
-        }
-
-        // Kalau yang login bukan admin, kembalikan ke dashboard customer
-        return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman Admin!');
-    })->name('admin.dashboard');
+    // --- Dashboard Admin ---
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     // --- Notifikasi Admin ---
     Route::get('/admin/notifikasi', function () {
         if (Auth::user()->peran === 'admin') {
@@ -75,73 +68,83 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.notifikasi');
-        // --- Verifikasi Mitra ---
+    // --- Verifikasi Mitra ---
     Route::get('/admin/verifikasi', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-verifikasi');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.verifikasi');
-        // --- Profil Admin ---
+    // --- Profil Admin ---
     Route::get('/admin/profil', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-profil');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.profil');
-        // --- Pengaturan Admin ---
+    // --- Pengaturan Admin ---
     Route::get('/admin/pengaturan', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-pengaturan');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.pengaturan');
-        // --- Keamanan Admin ---
+    // --- Keamanan Admin ---
     Route::get('/admin/keamanan', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-keamanan');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.keamanan');
-        // --- Integrasi Admin ---
+    // --- Integrasi Admin ---
     Route::get('/admin/integrasi', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-integrasi');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.integrasi');
-        // --- Notifikasi Pengaturan Admin ---
+    // --- Notifikasi Pengaturan Admin ---
     Route::get('/admin/pengaturan-notifikasi', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-notifikasi-pengaturan');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.pengaturan.notifikasi');
-        // --- Log Audit Admin ---
+    // --- Log Audit Admin ---
     Route::get('/admin/log-audit', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-log-audit');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.log-audit');
-        // --- Rekap Transaksi Admin ---
+    // --- Rekap Transaksi Admin ---
     Route::get('/admin/rekap-transaksi', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-rekap-transaksi');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.rekap-transaksi');
-        // --- Moderasi Katalog Admin ---
+    // --- Moderasi Katalog Admin ---
     Route::get('/admin/moderasi-katalog', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-moderasi-katalog');
         }
+
         return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses!');
     })->name('admin.moderasi-katalog');
     Route::get('admin/atur-komisi', function () {
         if (Auth::user()->peran === 'admin') {
             return view('admin-atur-komisi');
         }
+
         return redirect('/dashboard')->with('error', 'anda tidak memiliki akses!');
     })->name('admin.atur-komisi');
 
