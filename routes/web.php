@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\PartnerRegistrationController; 
-use App\Http\Controllers\ProfileController;
+use Modules\Admin\Http\Controllers\AdminDashboardController;
+use Modules\Onboarding\Http\Controllers\PartnerRegistrationController;
+use Modules\Identity\Http\Controllers\ProfileController; // Ubah ini
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 // ==========================================
 // 1. HALAMAN UTAMA (LANDING PAGE)
@@ -52,7 +53,7 @@ Route::get('/syarat-ketentuan', function () {
 // ==========================================
 
 // -- Guide --
-Route::get('/daftar-guide', function () { return view('register-guide-step1'); })->name('register.guide');
+Route::get('/daftar-guide', function () { return view('Onboarding::register-guide-step1'); })->name('register.guide');
 Route::post('/daftar-guide', [PartnerRegistrationController::class, 'storeGuideStep1'])->name('register.guide.store');
 
 Route::get('/daftar-guide/step-2', [PartnerRegistrationController::class, 'showGuideStep2'])->name('register.guide.step2');
@@ -62,7 +63,7 @@ Route::get('/daftar-guide/step-3', [PartnerRegistrationController::class, 'showG
 Route::post('/daftar-guide/step-3', [PartnerRegistrationController::class, 'storeGuideStep3'])->name('register.guide.step3.store');
 
 // -- Rental --
-Route::get('/daftar-rental', function () { return view('register-rental-step1'); })->name('register.rental');
+Route::get('/daftar-rental', function () { return view('Onboarding::register-rental-step1'); })->name('register.rental');
 Route::post('/daftar-rental', [PartnerRegistrationController::class, 'storeRentalStep1'])->name('register.rental.store');
 
 Route::get('/daftar-rental/step-2', [PartnerRegistrationController::class, 'showRentalStep2'])->name('register.rental.step2');
@@ -73,7 +74,7 @@ Route::post('/daftar-rental/step-3', [PartnerRegistrationController::class, 'sto
 
 // -- Menunggu Verifikasi --
 Route::get('/menunggu-verifikasi', function () {
-    return view('partner-waiting');
+    return view('Onboarding::partner-waiting');
 })->name('register.waiting');
 
 
