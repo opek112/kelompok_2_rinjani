@@ -4,93 +4,88 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>Daftar Akun - RinjaniGuide</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts (Vite & Tailwind) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans text-gray-900 antialiased bg-gray-100">
+<body class="font-sans text-gray-900 antialiased bg-gray-50">
     <div class="min-h-screen flex">
         
         <!-- KIRI: Bagian Gambar & Info (Sembunyikan di HP) -->
-        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 text-white flex-col justify-between p-12 bg-cover bg-center" style="background-image: url('https://statik.tempo.co/data/2018/11/26/id_799732/799732_720.jpg');">
-            <!-- Overlay gelap -->
-            <div class="absolute inset-0 bg-black/60"></div>
+        <div class="hidden lg:flex lg:w-1/2 relative bg-[#143529] text-white flex-col justify-between p-12 bg-cover bg-center" style="background-image: url('https://statik.tempo.co/data/2018/11/26/id_799732/799732_720.jpg');">
+            <div class="absolute inset-0 bg-black/50"></div>
             
-            <!-- Konten Kiri -->
             <div class="relative z-10">
                 <div class="mb-8 flex gap-4 text-xs font-semibold">
                     <span class="border border-white/30 rounded-full px-3 py-1">MITRA RESMI TNGR</span>
                     <span class="border border-white/30 rounded-full px-3 py-1">⛰️ 3.726 mdpl</span>
                 </div>
-                <h1 class="text-5xl font-bold mb-4 leading-tight">Mulai perjalananmu ke puncak Rinjani.</h1>
-                <p class="text-gray-300 mb-8 max-w-md">Akses mudah menuju keagungan Danau Segara Anak dan Puncak Anjani dengan standar operasional keselamatan tinggi serta perlengkapan gunung teruji cuaca.</p>
+                <h1 class="text-5xl font-serif font-bold mb-4 leading-tight">Mulai perjalananmu ke puncak Rinjani.</h1>
+                <p class="text-gray-300 mb-8 max-w-md text-sm">Akses mudah menuju keagungan Danau Segara Anak dan Puncak Anjani dengan standar operasional keselamatan tinggi serta perlengkapan gunung teruji cuaca.</p>
                 
-                <!-- List Fitur -->
                 <div class="space-y-3">
-                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm"><span class="text-orange-400">🛡️</span> Pemandu berlisensi resmi APGI</div>
-                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm"><span class="text-orange-400">🎒</span> Alat outdoor terstandarisasi & terawat</div>
-                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm"><span class="text-orange-400">💳</span> Pembayaran aman via QRIS instan</div>
+                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm border border-white/5"><span class="text-orange-400">🛡️</span> Pemandu berlisensi resmi APGI</div>
+                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm border border-white/5"><span class="text-orange-400">🎒</span> Alat outdoor terstandarisasi & terawat</div>
+                    <div class="flex items-center gap-3 bg-white/10 p-3 rounded-lg text-sm border border-white/5"><span class="text-orange-400">💳</span> Pembayaran aman via QRIS instan</div>
                 </div>
             </div>
             
-            <!-- Footer Kiri -->
-            <div class="relative z-10 text-xs text-gray-400 flex justify-between items-center border-t border-white/20 pt-4">
-                <div>👨‍💼 Standar Ekpedisi Berkelanjutan</div>
+            <div class="relative z-10 text-xs text-gray-400 flex justify-between items-center border-t border-white/20 pt-6 mt-12">
+                <div>👨‍💼 Standar Ekpedisi Berkelanjutan<br><span class="text-[10px]">Sembalun • Senaru • Torean</span></div>
                 <div>© RinjaniGuide TNGR</div>
             </div>
         </div>
 
         <!-- KANAN: Form Register -->
-        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white overflow-y-auto">
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white overflow-y-auto h-screen">
             <div class="w-full max-w-md">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-xl">R</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-800">RinjaniGuide</h2>
-                        <p class="text-[10px] text-gray-500 tracking-widest">Guide & Rental Service</p>
+                        <h2 class="text-lg font-bold text-gray-800 leading-tight">RinjaniGuide <span class="font-normal text-gray-500">& Rental</span></h2>
+                        <p class="text-[10px] text-gray-500 tracking-widest uppercase">Pendaftaran Pendaki</p>
                     </div>
-                    <span class="ml-auto text-xs font-semibold border border-gray-300 rounded px-2 py-1 text-gray-600">Registrasi Pendaki</span>
+                    <span class="ml-auto text-xs font-semibold border border-gray-200 bg-gray-50 rounded-full px-3 py-1.5 text-gray-600">Registrasi Akun</span>
                 </div>
 
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">Buat Akun Baru</h1>
                 <p class="text-sm text-gray-500 mb-6">Daftar untuk pengalaman pemesanan yang lebih mudah.</p>
 
-                <!-- Form Start -->
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <!-- Nama Lengkap (Sesuaikan dengan DB: nama) -->
+                    <!-- Nama Lengkap -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                        <input type="text" name="nama" value="{{ old('nama') }}" required autofocus autocomplete="name"
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm"
-                            placeholder="Contoh: Andi Pratama">
+                        <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Nama Lengkap</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">👤</span>
+                            <input type="text" name="nama" value="{{ old('nama') }}" required autofocus autocomplete="name"
+                                class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm transition"
+                                placeholder="Contoh: Andi Pratama">
+                        </div>
                         @error('nama') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Email -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" name="email" value="{{ old('email') }}" required autocomplete="username"
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm"
-                            placeholder="nama@email.com">
+                        <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Email</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">✉️</span>
+                            <input type="email" name="email" value="{{ old('email') }}" required autocomplete="username"
+                                class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm transition"
+                                placeholder="nama@email.com">
+                        </div>
                         @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- No WhatsApp (Sesuaikan dengan DB: no_telepon) -->
+                    <!-- No WhatsApp -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">No. WhatsApp</label>
-                        <div class="flex">
-                            <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                        <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">No. WhatsApp</label>
+                        <div class="relative flex">
+                            <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-200 bg-gray-100 text-gray-500 text-sm font-semibold">+62</span>
+                            <span class="absolute inset-y-0 left-12 pl-2 flex items-center text-gray-400">📞</span>
                             <input type="text" name="no_telepon" value="{{ old('no_telepon') }}" required
-                                class="w-full border-gray-300 rounded-r-lg shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm"
+                                class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-r-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm transition"
                                 placeholder="812-3456-7890">
                         </div>
                         @error('no_telepon') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
@@ -98,31 +93,39 @@
 
                     <!-- Password -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
-                        <input type="password" name="password" required autocomplete="new-password"
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm"
-                            placeholder="Minimal 8 karakter">
+                        <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Kata Sandi</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔒</span>
+                            <input type="password" name="password" required autocomplete="new-password"
+                                class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm transition"
+                                placeholder="Minimal 8 karakter">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">👁️</span>
+                        </div>
                         @error('password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Konfirmasi Password -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Kata Sandi</label>
-                        <input type="password" name="password_confirmation" required autocomplete="new-password"
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:border-orange-500 focus:ring-orange-500 text-sm"
-                            placeholder="Ulangi kata sandi">
+                        <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Konfirmasi Kata Sandi</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔄</span>
+                            <input type="password" name="password_confirmation" required autocomplete="new-password"
+                                class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm transition"
+                                placeholder="Ulangi kata sandi">
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">👁️</span>
+                        </div>
                     </div>
 
                     <!-- Checkbox S&K -->
-                    <div class="mb-6 flex items-start">
+                    <div class="mb-6 flex items-start bg-gray-50 p-4 rounded-lg border border-gray-200">
                         <input type="checkbox" name="terms" required class="mt-1 rounded border-gray-300 text-orange-500 shadow-sm focus:ring-orange-500">
-                        <label class="ml-2 block text-xs text-gray-600">
-                            Saya menyetujui <a href="#" class="text-orange-500 hover:underline">Syarat & Ketentuan</a> serta <a href="#" class="text-orange-500 hover:underline">Kebijakan Privasi</a>.
+                        <label class="ml-3 block text-xs text-gray-600 leading-relaxed">
+                            Saya menyetujui <a href="#" class="text-orange-500 font-semibold hover:underline">Syarat & Ketentuan</a> serta <a href="#" class="text-orange-500 font-semibold hover:underline">Kebijakan Privasi</a>. Data yang saya berikan adalah benar dan dapat dipertanggungjawabkan.
                         </label>
                     </div>
 
                     <!-- Tombol Daftar -->
-                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg flex justify-center items-center gap-2 transition text-sm">
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-4 rounded-lg flex justify-center items-center gap-2 transition shadow-lg shadow-orange-500/30 text-sm">
                         Daftar Akun Sekarang <span class="text-lg">→</span>
                     </button>
                 </form>
@@ -131,11 +134,16 @@
                     Sudah punya akun? <a href="{{ route('login') }}" class="text-orange-500 font-semibold hover:underline">Masuk</a>
                 </div>
                 
-                <div class="mt-8 border-t border-gray-200 pt-6 text-center">
-                    <p class="text-xs text-gray-500 mb-3">Ingin bergabung sebagai mitra?</p>
-                    <div class="flex gap-2">
-                        <a href="#" class="flex-1 border border-gray-300 rounded-lg py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 flex justify-center items-center gap-2">🧗‍♂️ Sebagai Pemandu</a>
-                        <a href="#" class="flex-1 border border-gray-300 rounded-lg py-2 text-xs font-medium text-gray-700 hover:bg-gray-50 flex justify-center items-center gap-2">🏪 Sebagai Toko Rental</a>
+                <!-- CTA MITRA -->
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <p class="text-center text-sm text-gray-500 mb-4">Ingin bergabung sebagai mitra?</p>
+                    <div class="flex gap-3">
+                        <a href="{{ url('/daftar-guide') }}" class="flex-1 border border-gray-300 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-orange-500 flex justify-center items-center gap-2 transition">
+                            🧗‍♂️ Sebagai Pemandu
+                        </a>
+                        <a href="{{ url('/daftar-rental') }}" class="flex-1 border border-gray-300 rounded-xl py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-orange-500 flex justify-center items-center gap-2 transition">
+                            🏪 Sebagai Toko Rental
+                        </a>
                     </div>
                 </div>
 
