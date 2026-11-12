@@ -2,6 +2,7 @@
 
 namespace Modules\Onboarding\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Modules\Identity\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

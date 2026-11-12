@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace Modules\Rental\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Equipment;
+use Modules\Rental\Models\Equipment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

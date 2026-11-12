@@ -18,9 +18,13 @@ abstract class ModuleServiceProvider extends ServiceProvider
         return base_path('modules/' . $this->moduleName() . ($path ? '/' . $path : ''));
     }
 
-    public function boot(): void
+        public function boot(): void
     {
-        $this->loadViewsFrom($this->modulePath('Resources/views'), $this->viewNamespace());
+        $viewPath = $this->modulePath('Resources/views');
+        
+        if (is_dir($viewPath)) {
+            $this->loadViewsFrom($viewPath, $this->viewNamespace());
+        }
 
         if (is_dir($this->modulePath('Database/Migrations'))) {
             $this->loadMigrationsFrom($this->modulePath('Database/Migrations'));

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Modules\Booking\Models;
+
+use Modules\Identity\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +19,6 @@ class Pemesanan extends Model
 
     public function pemandu()
     {
-        return $this->belongsTo(Pemandu::class, 'pemandu_id');
+        return $this->belongsTo(\Modules\Booking\Models\Pemandu::class, 'pemandu_id');
     }
 }

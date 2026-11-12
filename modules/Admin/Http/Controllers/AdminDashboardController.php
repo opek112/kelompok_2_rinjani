@@ -2,9 +2,10 @@
 
 namespace Modules\Admin\Http\Controllers;
 
-use App\Models\Pemandu;
-use App\Models\Pemesanan;
-use App\Models\TokoRental;
+use App\Http\Controllers\Controller;
+use Modules\Guide\Models\Pemandu;
+use Modules\Booking\Models\Pemesanan;
+use Modules\Rental\Models\TokoRental;
 use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
