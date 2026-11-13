@@ -15,7 +15,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
 
     protected function modulePath(string $path = ''): string
     {
-        return base_path('modules/' . $this->moduleName() . ($path ? '/' . $path : ''));
+        return app_path('modules/' . $this->moduleName() . ($path ? '/' . $path : ''));
     }
 
         public function boot(): void
