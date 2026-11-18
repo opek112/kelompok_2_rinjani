@@ -26,6 +26,7 @@ class AdminVerifikasiController extends Controller
         $pemandu->update(['status' => $request->status]);
 
         $pesan = $request->status === 'active' ? 'Pemandu berhasil disetujui.' : 'Pemandu ditolak.';
+
         return redirect()->back()->with('success', $pesan);
     }
 
@@ -37,6 +38,7 @@ class AdminVerifikasiController extends Controller
         $rental->update(['status' => $request->status]);
 
         $pesan = $request->status === 'active' ? 'Toko Rental berhasil disetujui.' : 'Toko Rental ditolak.';
+
         return redirect()->back()->with('success', $pesan);
     }
 }

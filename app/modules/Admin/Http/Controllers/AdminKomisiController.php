@@ -24,7 +24,7 @@ class AdminKomisiController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'persentase_komisi' => 'required|numeric|min:1|max:30'
+            'persentase_komisi' => 'required|numeric|min:1|max:30',
         ]);
 
         PengaturanPlatform::updateOrCreate(
@@ -32,6 +32,6 @@ class AdminKomisiController extends Controller
             ['nilai' => $request->persentase_komisi]
         );
 
-        return redirect()->back()->with('success', 'Persentase komisi berhasil diperbarui menjadi ' . $request->persentase_komisi . '%');
+        return redirect()->back()->with('success', 'Persentase komisi berhasil diperbarui menjadi '.$request->persentase_komisi.'%');
     }
 }
