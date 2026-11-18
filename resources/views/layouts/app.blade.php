@@ -76,6 +76,12 @@
 
                 <!-- Bagian Kanan (Auth / Profile) -->
                 <div class="hidden md:flex items-center space-x-4">
+                    <a href="{{ route('rental.cart') }}" class="relative text-gray-300 hover:text-white transition" title="Keranjang Rental">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        @if (array_sum(session('rental_cart.items', [])) > 0)
+                            <span class="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{{ array_sum(session('rental_cart.items', [])) }}</span>
+                        @endif
+                    </a>
                     @auth
                         <button class="relative text-gray-300 hover:text-white transition">
                             <i class="fa-regular fa-bell text-xl"></i>
@@ -132,6 +138,12 @@
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md hover:bg-brand-green">Home</a>
             <a href="{{ route('guide') }}" class="block px-3 py-2 rounded-md hover:bg-brand-green">Guide</a>
             <a href="{{ route('rental') }}" class="block px-3 py-2 rounded-md hover:bg-brand-green">Rental</a>
+            <a href="{{ route('rental.cart') }}" class="block px-3 py-2 rounded-md hover:bg-brand-green">
+                Keranjang Rental
+                @if (array_sum(session('rental_cart.items', [])) > 0)
+                    <span class="bg-brand-orange text-white text-[10px] font-bold px-2 py-0.5 rounded-full ml-1">{{ array_sum(session('rental_cart.items', [])) }}</span>
+                @endif
+            </a>
             @guest
             <a href="{{ route('login') }}" class="block px-3 py-2 mt-4 text-center bg-brand-orange rounded-full font-bold">Masuk / Daftar</a>
             @endguest

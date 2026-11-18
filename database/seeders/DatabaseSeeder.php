@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         // Panggil AdminSeeder agar akun admin otomatis dibuat
         $this->call([
             AdminSeeder::class,
+            RentalCatalogSeeder::class,
         ]);
     }
 }
