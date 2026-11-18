@@ -6,6 +6,13 @@ use Modules\Shared\Providers\ModuleServiceProvider;
 
 class AdminServiceProvider extends ModuleServiceProvider
 {
-    protected function moduleName(): string { return 'Admin'; }
-    protected function viewNamespace(): string { return 'admin'; }
+    protected function moduleName(): string
+    {
+        return 'Admin';
+    }
+
+    protected function viewNamespace(): string
+    {
+        return 'admin';
+    }
 }

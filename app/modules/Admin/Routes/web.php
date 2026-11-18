@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\AdminDashboardController;
 use Modules\Admin\Http\Controllers\AdminKomisiController;
 use Modules\Admin\Http\Controllers\AdminVerifikasiController;
+use Modules\Admin\Http\Controllers\AdminRekapController;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -14,7 +15,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::view('/integrasi', 'admin::integrasi')->name('integrasi');
     Route::view('/pengaturan-notifikasi', 'admin::notifikasi-pengaturan')->name('pengaturan.notifikasi');
     Route::view('/log-audit', 'admin::log-audit')->name('log-audit');
-    Route::view('/rekap-transaksi', 'admin::rekap-transaksi')->name('rekap-transaksi');
+    Route::get('/rekap-transaksi', [AdminRekapController::class, 'index'])->name('rekap-transaksi');
+Route::get('/rekap-transaksi/export', [AdminRekapController::class, 'exportCsv'])->name('rekap-transaksi.export');
     Route::view('/moderasi-katalog', 'admin::moderasi-katalog')->name('moderasi-katalog');
 
     Route::get('/atur-komisi', [AdminKomisiController::class, 'index'])->name('atur-komisi');
