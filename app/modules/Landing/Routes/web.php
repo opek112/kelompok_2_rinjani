@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Guide\Http\Controllers\GuideCatalogController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/guide', function () {
-    return view('guide');
-})->name('guide');
+Route::get('/guide', [GuideCatalogController::class, 'index'])->name('guide');
+Route::get('/guide/{pemandu}', [GuideCatalogController::class, 'show'])->name('guide.detail')->whereNumber('pemandu');
 Route::get('/cara-pesan', function () {
     return view('cara-pesan');
 })->name('cara-pesan');

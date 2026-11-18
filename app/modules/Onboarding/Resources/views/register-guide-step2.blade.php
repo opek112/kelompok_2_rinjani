@@ -26,13 +26,18 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Jalur Keahlian Utama</label>
-                <select name="jalur_keahlian" required class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 focus:ring-2 focus:ring-orange-500">
-                    <option value="" disabled selected>Pilih jalur...</option>
-                    <option value="Sembalun">Sembalun</option>
-                    <option value="Senaru">Senaru</option>
-                    <option value="Torean">Torean</option>
-                </select>
+                <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Jalur Keahlian (bisa lebih dari satu)</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    @foreach (['Sembalun', 'Senaru', 'Torean', 'Aik Berik', 'Timbanuh', 'Tetebatu'] as $rute)
+                        <label class="cursor-pointer">
+                            <input type="checkbox" name="rute[]" value="{{ $rute }}" class="peer sr-only" {{ in_array($rute, old('rute', []), true) ? 'checked' : '' }}>
+                            <div class="px-4 py-2 border border-gray-200 rounded-lg text-sm text-center text-gray-600 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition">
+                                {{ $rute }}
+                            </div>
+                        </label>
+                    @endforeach
+                </div>
+                @error('rute') <span class="text-red-500 text-xs block mt-2">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-4">
@@ -40,13 +45,14 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach(['Indonesia', 'Inggris', 'Mandarin', 'Jepang', 'Arab', 'Prancis'] as $bhs)
                         <label class="cursor-pointer">
-                            <input type="checkbox" name="bahasa[]" value="{{ $bhs }}" class="peer sr-only">
+                            <input type="checkbox" name="bahasa[]" value="{{ $bhs }}" class="peer sr-only" {{ in_array($bhs, old('bahasa', []), true) ? 'checked' : '' }}>
                             <div class="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500 transition">
                                 {{ $bhs }}
                             </div>
                         </label>
                     @endforeach
                 </div>
+                @error('bahasa') <span class="text-red-500 text-xs block mt-2">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-4">
