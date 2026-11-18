@@ -3,9 +3,11 @@
 namespace Modules\Onboarding\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Modules\Guide\Models\Pemandu;
 use Modules\Identity\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -43,13 +45,15 @@ class PartnerRegistrationController extends Controller
     {
         $request->validate([
             'nomor_lisensi' => ['required', 'string', 'max:255'],
-            'jalur_keahlian' => ['required', 'string'],
-            'bahasa' => ['required', 'array'],
-            'tarif_harian' => ['required', 'numeric'],
+            'rute' => ['required', 'array', 'min:1'],
+            'rute.*' => ['string', 'max:50'],
+            'bahasa' => ['required', 'array', 'min:1'],
+            'bahasa.*' => ['string', 'max:50'],
+            'tarif_harian' => ['required', 'numeric', 'min:0'],
             'bio' => ['required', 'string', 'max:300'],
         ]);
 
-        $data = $request->only('nomor_lisensi', 'jalur_keahlian', 'bahasa', 'tarif_harian', 'bio');
+        $data = $request->only('nomor_lisensi', 'rute', 'bahasa', 'tarif_harian', 'bio');
         session(['guide_step2' => $data]);
 
         return redirect()->route('register.guide.step3');
@@ -87,14 +91,39 @@ class PartnerRegistrationController extends Controller
         $pathSertifikat = $request->file('file_sertifikat')->store('dokumen/sertifikat', 'public');
         $pathKtp = $request->file('file_ktp')->store('dokumen/ktp', 'public');
 
-        $user = User::create([
-            'nama' => $step1['nama'],
-            'email' => $step1['email'],
-            'no_telepon' => $step1['no_telepon'],
-            'password' => $step1['password'],
-            'peran' => 'guide', 
-            'email_verified_at' => now(), 
-        ]);
+        $step2 = session('guide_step2', []);
+
+        $user = DB::transaction(function () use ($step1, $step2, $pathSertifikat, $pathKtp, $request) {
+            $user = User::create([
+                'nama' => $step1['nama'],
+                'email' => $step1['email'],
+                'no_telepon' => $step1['no_telepon'],
+                'password' => $step1['password'],
+                'peran' => 'guide',
+                'email_verified_at' => now(),
+            ]);
+
+            $pemandu = Pemandu::create([
+                'user_id' => $user->id,
+                'nomor_lisensi' => $step2['nomor_lisensi'] ?? null,
+                'path_berkas_lisensi' => $pathSertifikat,
+                'path_foto_ktp' => $pathKtp,
+                'bahasa' => implode(', ', $step2['bahasa'] ?? []),
+                'tarif_harian' => $step2['tarif_harian'] ?? 0,
+                'bio' => $step2['bio'] ?? null,
+                'info_rekening_bank' => trim($request->nama_bank.' - '.$request->nomor_rekening.' - '.$request->nama_pemilik_rekening),
+                'nama_bank' => $request->nama_bank,
+                'nomor_rekening' => $request->nomor_rekening,
+                'nama_pemilik_rekening' => $request->nama_pemilik_rekening,
+                'status' => 'pending',
+            ]);
+
+            foreach ($step2['rute'] ?? [] as $rute) {
+                $pemandu->rutes()->create(['rute' => $rute]);
+            }
+
+            return $user;
+        });
 
         Auth::login($user);
         session()->forget(['guide_step1', 'guide_step2']);

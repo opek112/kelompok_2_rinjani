@@ -51,6 +51,10 @@
                     class="flex items-center gap-3 px-3 py-3 {{ request()->routeIs('guide.profile') ? 'bg-[#2c5548] border-l-4 border-orange-500 text-white' : 'text-gray-300 hover:bg-white/5' }} rounded-r-lg transition">
                     <span>👤</span> Profil
                 </a>
+                <a href="{{ route('guide.settings') }}"
+                    class="flex items-center gap-3 px-3 py-3 {{ request()->routeIs('guide.settings*') ? 'bg-[#2c5548] border-l-4 border-orange-500 text-white' : 'text-gray-300 hover:bg-white/5' }} rounded-r-lg transition">
+                    <span>⚙️</span> Pengaturan
+                </a>
             </nav>
         </div>
 
@@ -78,20 +82,37 @@
 
             <div class="flex items-center gap-4">
                 <!-- Notifikasi -->
-                <a href="{{ route('guide.notifications') }}" class="relative cursor-pointer group">
+                <a href="{{ route('guide.schedule') }}" class="relative cursor-pointer group">
                     <span class="text-xl group-hover:opacity-80">🔔</span>
-                    <span
-                        class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">2</span>
+                    @if (($navPerluKonfirmasi ?? 0) > 0)
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">{{ $navPerluKonfirmasi }}</span>
+                    @endif
                 </a>
                 <div class="w-px h-8 bg-gray-300 mx-2"></div>
                 <!-- User Profile -->
                 <div class="flex items-center gap-3 cursor-pointer">
-                    <div
-                        class="w-10 h-10 bg-[#1e4035] rounded-full flex items-center justify-center text-white font-bold">
-                        AR</div>
+                    @if ($navUser?->foto)
+                        <img src="{{ $navUser->fotoUrl() }}" alt="Foto profil"
+                            class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                    @else
+                        <div
+                            class="w-10 h-10 bg-[#1e4035] rounded-full flex items-center justify-center text-white font-bold">
+                            {{ $navPemandu?->inisial() ?? mb_strtoupper(mb_substr($navUser->nama ?? 'PM', 0, 2)) }}</div>
+                    @endif
                     <div class="hidden md:block">
-                        <p class="text-sm font-bold text-gray-800">Ahmad Rifai</p>
-                        <p class="text-xs text-gray-500">Pemandu Senior APGI</p>
+                        <p class="text-sm font-bold text-gray-800">{{ $navUser->nama ?? 'Pemandu' }}</p>
+                        <p class="text-xs text-gray-500">
+                            @if (($navPemandu?->status ?? null) === 'active')
+                                Pemandu Terverifikasi APGI
+                            @elseif (($navPemandu?->status ?? null) === 'pending')
+                                Menunggu Verifikasi Admin
+                            @elseif (($navPemandu?->status ?? null) === 'rejected')
+                                Pendaftaran Ditolak
+                            @else
+                                Mode Pemandu
+                            @endif
+                        </p>
                     </div>
                     <span class="text-gray-400 text-xs">▼</span>
                 </div>
@@ -100,6 +121,31 @@
 
         <!-- ISI HALAMAN (BERUBAH-UBAH) -->
         <main class="flex-1 overflow-y-auto p-8 bg-[#f8f9fa]">
+            @if (session('success'))
+                <div class="mb-5 flex items-start gap-3 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+                    <span>✅</span>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="mb-5 flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    <span>⚠️</span>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="mb-5 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    <p class="font-bold mb-1">Periksa kembali data yang Anda isi:</p>
+                    <ul class="list-disc list-inside space-y-0.5">
+                        @foreach ($errors->all() as $pesan)
+                            <li>{{ $pesan }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @yield('content')
         </main>
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['nama', 'email', 'no_telepon', 'password', 'peran'])]
+#[Fillable(['nama', 'email', 'no_telepon', 'foto', 'password', 'peran'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,5 +27,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function fotoUrl(): ?string
+    {
+        return $this->foto ? asset('storage/'.$this->foto) : null;
     }
 }

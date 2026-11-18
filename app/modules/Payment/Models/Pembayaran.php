@@ -1,8 +1,10 @@
 <?php
 
 namespace Modules\Payment\Models;
-use Modules\Booking\Models\Pemesanan;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Booking\Models\Pemesanan;
 
 class Pembayaran extends Model
 {
@@ -10,7 +12,16 @@ class Pembayaran extends Model
 
     protected $guarded = ['id'];
 
-    public function pemesanan()
+    protected function casts(): array
+    {
+        return [
+            'nominal' => 'float',
+            'kedaluwarsa_pada' => 'datetime',
+            'dibayar_pada' => 'datetime',
+        ];
+    }
+
+    public function pemesanan(): BelongsTo
     {
         return $this->belongsTo(Pemesanan::class, 'pemesanan_id');
     }
