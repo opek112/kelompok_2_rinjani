@@ -1,6 +1,6 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
-use Modules\Identity\Http\Controllers\ProfileController;
 use Modules\Identity\Http\Controllers\Auth\AuthenticatedSessionController;
 use Modules\Identity\Http\Controllers\Auth\ConfirmablePasswordController;
 use Modules\Identity\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -10,9 +10,12 @@ use Modules\Identity\Http\Controllers\Auth\PasswordController;
 use Modules\Identity\Http\Controllers\Auth\PasswordResetLinkController;
 use Modules\Identity\Http\Controllers\Auth\RegisteredUserController;
 use Modules\Identity\Http\Controllers\Auth\VerifyEmailController;
+use Modules\Identity\Http\Controllers\ProfileController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('block.rental')->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

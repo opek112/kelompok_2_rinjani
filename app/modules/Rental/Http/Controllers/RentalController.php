@@ -9,10 +9,11 @@ use Illuminate\View\View;
 use Modules\Rental\Models\Peralatan;
 use Modules\Rental\Models\TokoRental;
 use Modules\Rental\Support\Cart;
+use Modules\Rental\Support\StokService;
 
 class RentalController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request, StokService $stok): View
     {
         $kategori = $request->string('kategori')->toString();
         $pos = $request->string('pos')->toString();
@@ -22,7 +23,10 @@ class RentalController extends Controller
         $hargaMaksimal = $request->integer('maksimal');
         $tampil = max(6, min(36, $request->integer('tampil', 6)));
 
-        $query = Peralatan::query()->with('toko')->where('jumlah_stok', '>', 0);
+        $query = Peralatan::query()
+            ->with('toko')
+            ->where('jumlah_stok', '>', 0)
+            ->whereHas('toko', fn ($builder) => $builder->where('status', 'active')->where('aktif', true));
 
         if ($pencarian !== '') {
             $query->where(function ($builder) use ($pencarian): void {
@@ -57,8 +61,12 @@ class RentalController extends Controller
         $total = (clone $query)->count();
         $peralatan = $query->limit($tampil)->get();
 
+        // FR-REN-04: tampilkan sisa stok nyata setelah pesanan beririsan.
+        $sisaStok = $stok->petaSisaStok($peralatan->pluck('id')->all(), today(), today());
+
         return view('rental.catalog', [
             'peralatan' => $peralatan,
+            'sisaStok' => $sisaStok,
             'total' => $total,
             'tampil' => $tampil,
             'tampilBerikutnya' => min(36, $tampil + 6),
@@ -70,7 +78,7 @@ class RentalController extends Controller
             'hargaMaksimal' => $hargaMaksimal,
             'daftarKategori' => Peralatan::query()->select('kategori')->distinct()->orderBy('kategori')->pluck('kategori')->filter()->values(),
             'daftarPos' => Peralatan::query()->select('pos')->distinct()->orderBy('pos')->pluck('pos')->filter()->values(),
-            'daftarToko' => TokoRental::query()->where('status', 'active')->orderBy('nama_toko')->get(),
+            'daftarToko' => TokoRental::query()->where('status', 'active')->where('aktif', true)->orderBy('nama_toko')->get(),
         ]);
     }
 

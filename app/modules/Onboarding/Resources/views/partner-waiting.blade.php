@@ -85,12 +85,22 @@
 
         <!-- CTA Buttons -->
         <div class="space-y-3">
-            <a href="#" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 transition shadow-lg shadow-orange-500/30">
+            <a href="https://wa.me/6281234567890?text={{ urlencode('Halo admin, saya mitra ' . ucfirst(Auth::user()->peran ?? 'mitra') . ' ingin menanyakan status verifikasi akun.') }}"
+                target="_blank" rel="noopener"
+                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 transition shadow-lg shadow-orange-500/30">
                 💬 Hubungi Admin via WhatsApp
             </a>
-            <button class="w-full bg-white border border-gray-300 text-gray-700 font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-50 transition">
-                🔄 Cek Status Verifikasi
-            </button>
+            @if ((Auth::user()->peran ?? null) === 'rental')
+                <a href="{{ route('rental.verification') }}"
+                    class="w-full bg-white border border-gray-300 text-gray-700 font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-50 transition">
+                    🔄 Cek Status Verifikasi
+                </a>
+            @else
+                <a href="{{ route('home') }}"
+                    class="w-full bg-white border border-gray-300 text-gray-700 font-bold py-3.5 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-50 transition">
+                    🔄 Kembali ke Beranda
+                </a>
+            @endif
         </div>
         
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="inline-block mt-6 text-sm text-gray-500 hover:text-gray-800">Keluar</a>

@@ -138,15 +138,18 @@
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                     @foreach ($peralatan as $item)
-                        @php $detailUrl = route('rental.detail', $item); @endphp
+                        @php
+                            $detailUrl = route('rental.detail', $item);
+                            $sisa = $sisaStok[$item->id] ?? $item->jumlah_stok;
+                        @endphp
                         <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col hover:shadow-md transition">
                             <a href="{{ $detailUrl }}" class="relative block h-52 overflow-hidden">
                                 <img src="{{ $item->fotoUtama() }}" alt="{{ $item->nama }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
                                 <span class="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/95 text-brand-dark text-[11px] font-bold px-2.5 py-1 rounded-full">
                                     <i class="fa-solid fa-location-dot text-[10px]"></i> Pos {{ $item->pos ?? $item->toko?->nama_toko }}
                                 </span>
-                                <span class="absolute top-3 right-3 inline-flex items-center gap-1 {{ $item->jumlah_stok <= 10 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }} text-[11px] font-bold px-2.5 py-1 rounded-full">
-                                    <i class="fa-solid fa-cubes text-[10px]"></i> {{ $item->labelStok() }}{{ $item->jumlah_stok <= 10 ? ' (Terbatas)' : '' }}
+                                <span class="absolute top-3 right-3 inline-flex items-center gap-1 {{ $sisa <= 10 ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' }} text-[11px] font-bold px-2.5 py-1 rounded-full">
+                                    <i class="fa-solid fa-cubes text-[10px]"></i> Sisa {{ $sisa }} unit hari ini
                                 </span>
                             </a>
 
@@ -162,6 +165,10 @@
                                     <a href="{{ $detailUrl }}" class="hover:text-brand-orange transition">{{ $item->nama }}</a>
                                 </h3>
                                 <p class="text-sm text-gray-500 mt-1 flex-grow">{{ $item->deskripsi }}</p>
+                                <p class="text-[11px] text-gray-400 mt-2">
+                                    <i class="fa-solid fa-clock-rotate-left text-[10px]"></i>
+                                    Stok tersedia {{ $sisa }} dari {{ $item->jumlah_stok }} unit untuk sewa hari ini.
+                                </p>
 
                                 <div class="flex items-end justify-between gap-3 mt-6 pt-4 border-t border-gray-100">
                                     <div>

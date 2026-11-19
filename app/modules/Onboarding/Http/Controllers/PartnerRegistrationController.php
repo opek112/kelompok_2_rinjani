@@ -3,13 +3,14 @@
 namespace Modules\Onboarding\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Modules\Guide\Models\Pemandu;
-use Modules\Identity\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Modules\Guide\Models\Pemandu;
+use Modules\Identity\Models\User;
+use Modules\Rental\Models\TokoRental;
 
 class PartnerRegistrationController extends Controller
 {
@@ -34,7 +35,10 @@ class PartnerRegistrationController extends Controller
 
     public function showGuideStep2()
     {
-        if (!session()->has('guide_step1')) { return redirect()->route('register.guide')->with('error', 'Sesi habis, silakan isi ulang.'); }
+        if (! session()->has('guide_step1')) {
+            return redirect()->route('register.guide')->with('error', 'Sesi habis, silakan isi ulang.');
+        }
+
         return view('Onboarding::register-guide-step2');
     }
 
@@ -61,9 +65,10 @@ class PartnerRegistrationController extends Controller
 
     public function showGuideStep3()
     {
-        if (!session()->has('guide_step1') || !session()->has('guide_step2')) { 
-            return redirect()->route('register.guide')->with('error', 'Sesi habis, silakan isi ulang.'); 
+        if (! session()->has('guide_step1') || ! session()->has('guide_step2')) {
+            return redirect()->route('register.guide')->with('error', 'Sesi habis, silakan isi ulang.');
         }
+
         return view('Onboarding::register-guide-step3');
     }
 
@@ -81,12 +86,12 @@ class PartnerRegistrationController extends Controller
         ]);
 
         $step1 = session('guide_step1');
-        
+
         // PENGAMAN: Cek jika session hilang
-        if (!$step1) {
+        if (! $step1) {
             return redirect()->route('register.guide')->with('error', 'Sesi pendaftaran Anda telah berakhir. Silakan isi ulang dari awal.');
         }
-        
+
         // Simpan file ke folder storage/app/public/dokumen
         $pathSertifikat = $request->file('file_sertifikat')->store('dokumen/sertifikat', 'public');
         $pathKtp = $request->file('file_ktp')->store('dokumen/ktp', 'public');
@@ -153,7 +158,10 @@ class PartnerRegistrationController extends Controller
 
     public function showRentalStep2()
     {
-        if (!session()->has('rental_step1')) { return redirect()->route('register.rental')->with('error', 'Sesi habis, silakan isi ulang.'); }
+        if (! session()->has('rental_step1')) {
+            return redirect()->route('register.rental')->with('error', 'Sesi habis, silakan isi ulang.');
+        }
+
         return view('Onboarding::register-rental-step2');
     }
 
@@ -167,14 +175,16 @@ class PartnerRegistrationController extends Controller
         ]);
 
         session(['rental_step2' => $request->only('nama_toko', 'lokasi_pos', 'alamat', 'deskripsi')]);
+
         return redirect()->route('register.rental.step3');
     }
 
     public function showRentalStep3()
     {
-        if (!session()->has('rental_step1') || !session()->has('rental_step2')) { 
-            return redirect()->route('register.rental')->with('error', 'Sesi habis, silakan isi ulang.'); 
+        if (! session()->has('rental_step1') || ! session()->has('rental_step2')) {
+            return redirect()->route('register.rental')->with('error', 'Sesi habis, silakan isi ulang.');
         }
+
         return view('Onboarding::register-rental-step3');
     }
 
@@ -184,34 +194,60 @@ class PartnerRegistrationController extends Controller
             'nib' => ['required', 'string'],
             'npwp' => ['required', 'string'],
             'file_legalitas' => ['required', 'file', 'mimes:jpg,png,pdf', 'max:5120'],
-            'nama_bank' => ['required', 'string'], 
+            'nama_bank' => ['required', 'string'],
             'nomor_rekening' => ['required', 'string'],
             'nama_pemilik_rekening' => ['required', 'string'],
         ]);
-        
+
         $step1 = session('rental_step1');
-        
+
         // PENGAMAN: Cek jika session hilang
-        if (!$step1) {
+        if (! $step1) {
             return redirect()->route('register.rental')->with('error', 'Sesi pendaftaran Anda telah berakhir. Silakan isi ulang dari awal.');
         }
-        
+
         // Simpan file
         $pathLegalitas = $request->file('file_legalitas')->store('dokumen/legalitas', 'public');
 
-        $user = User::create([
-            'nama' => $step1['nama'],
-            'email' => $step1['email'],
-            'no_telepon' => $step1['no_telepon'],
-            'password' => $step1['password'],
-            'peran' => 'rental', 
-            'email_verified_at' => now(), 
-        ]);
+        $step2 = session('rental_step2', []);
+
+        $user = DB::transaction(function () use ($step1, $step2, $pathLegalitas, $request) {
+            $user = User::create([
+                'nama' => $step1['nama'],
+                'email' => $step1['email'],
+                'no_telepon' => $step1['no_telepon'],
+                'password' => $step1['password'],
+                'peran' => 'rental',
+                'email_verified_at' => now(),
+            ]);
+
+            // Wajib dibuat agar pendaftaran masuk daftar verifikasi admin dan
+            // akun memiliki data toko saat login kembali.
+            TokoRental::create([
+                'user_id' => $user->id,
+                'nama_toko' => $step2['nama_toko'] ?? $step1['nama'],
+                'lokasi_pos' => $step2['lokasi_pos'] ?? null,
+                'alamat' => trim(($step2['lokasi_pos'] ?? '').' — '.($step2['alamat'] ?? ''), ' —'),
+                'deskripsi' => $step2['deskripsi'] ?? null,
+                'penanggung_jawab' => $step1['nama'],
+                'telepon_toko' => $step1['no_telepon'],
+                'nib' => $request->nib,
+                'npwp' => $request->npwp,
+                'path_berkas_legalitas' => $pathLegalitas,
+                'nama_bank' => $request->nama_bank,
+                'nomor_rekening' => $request->nomor_rekening,
+                'nama_pemilik_rekening' => $request->nama_pemilik_rekening,
+                'info_rekening_bank' => trim($request->nama_bank.' - '.$request->nomor_rekening.' - '.$request->nama_pemilik_rekening),
+                'status' => 'pending',
+            ]);
+
+            return $user;
+        });
 
         Auth::login($user);
         session()->forget(['rental_step1', 'rental_step2']);
 
-        // REDIRECT KE HALAMAN MENUNGGU VERIFIKASI
-        return redirect()->route('register.waiting')->with('success', 'Pendaftaran Toko Rental berhasil! Menunggu verifikasi admin.');
+        // REDIRECT KE HALAMAN CEK STATUS VERIFIKASI MITRA RENTAL
+        return redirect()->route('rental.verification')->with('success', 'Pendaftaran Toko Rental berhasil! Menunggu verifikasi admin.');
     }
 }

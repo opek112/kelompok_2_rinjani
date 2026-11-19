@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Guide\Models\Pemandu;
 use Modules\Identity\Models\User;
 use Modules\Payment\Models\Pembayaran;
+use Modules\Rental\Models\PengembalianPeralatan;
 
 class Pemesanan extends Model
 {
@@ -27,7 +28,10 @@ class Pemesanan extends Model
             'nominal_komisi' => 'float',
             'kehadiran_pemandu_dikonfirmasi' => 'boolean',
             'waktu_serah_terima' => 'datetime',
+            'waktu_pengembalian' => 'datetime',
             'waktu_konfirmasi_pemandu' => 'datetime',
+            'foto_pengembalian' => 'array',
+            'denda_total' => 'float',
         ];
     }
 
@@ -49,5 +53,17 @@ class Pemesanan extends Model
     public function pembayaran(): HasOne
     {
         return $this->hasOne(Pembayaran::class, 'pemesanan_id');
+    }
+
+    public function pengembalian(): HasMany
+    {
+        return $this->hasManyThrough(
+            PengembalianPeralatan::class,
+            ItemPemesanan::class,
+            'pemesanan_id',
+            'item_pemesanan_id',
+            'id',
+            'id',
+        );
     }
 }

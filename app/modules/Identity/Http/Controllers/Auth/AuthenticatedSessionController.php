@@ -36,6 +36,12 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('guide.dashboard', absolute: false));
         }
 
+        if (Auth::user()->peran === 'rental') {
+            $tokoAktif = Auth::user()->tokoRental()->where('status', 'active')->exists();
+
+            return redirect()->intended(route($tokoAktif ? 'rental.dashboard' : 'rental.verification', absolute: false));
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

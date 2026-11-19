@@ -5,7 +5,7 @@ use Modules\Guide\Http\Controllers\GuideCatalogController;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->middleware('block.rental')->name('home');
 Route::get('/guide', [GuideCatalogController::class, 'index'])->name('guide');
 Route::get('/guide/{pemandu}', [GuideCatalogController::class, 'show'])->name('guide.detail')->whereNumber('pemandu');
 Route::get('/cara-pesan', function () {
