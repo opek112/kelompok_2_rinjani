@@ -64,7 +64,8 @@
                             <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Sesi
                                 Ini</span>
                         </div>
-                        <p class="text-xs text-gray-500">Mataram, Indonesia • IP 192.168.1.10</p>
+                        <p class="text-xs text-gray-500">Alamat IP: {{ $alamatIp ?: 'Tidak tersedia' }}</p>
+                        <p class="text-xs text-gray-500 break-all">{{ $perangkat }}</p>
                     </div>
                 </div>
             </div>

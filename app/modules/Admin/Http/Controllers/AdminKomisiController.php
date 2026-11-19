@@ -12,11 +12,7 @@ class AdminKomisiController extends Controller
     {
         $komisi = PengaturanPlatform::where('kunci', 'persentase_komisi')->first();
         $persentase = $komisi ? (float) $komisi->nilai : 10.00;
-
-        $riwayat = [
-            ['tanggal' => '1 Apr 2026', 'lama' => '8%', 'baru' => '10%', 'oleh' => 'Rizki Aditya'],
-            ['tanggal' => '1 Jan 2026', 'lama' => '10%', 'baru' => '8%', 'oleh' => 'Rizki Aditya'],
-        ];
+        $riwayat = collect();
 
         return view('admin::atur-komisi', compact('persentase', 'riwayat'));
     }

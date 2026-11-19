@@ -84,32 +84,33 @@
                     </svg>
                 </div>
                 <div>
-                    <h4 class="font-bold text-gray-900">Butuh Perhatian</h4>
-                    <p class="text-sm text-gray-600">2 pendaftaran mitra menunggu verifikasi.</p>
+                    <h4 class="font-bold text-gray-900">
+                        {{ $totalPending > 0 ? 'Butuh Perhatian' : 'Tidak Ada Pendaftaran Tertunda' }}
+                    </h4>
+                    <p class="text-sm text-gray-600">
+                        {{ $totalPending }} pendaftaran mitra menunggu verifikasi.
+                    </p>
                 </div>
             </div>
-            <button
+            <a href="{{ route('admin.verifikasi') }}"
                 class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition">
                 Lihat Sekarang →
-            </button>
+            </a>
         </div>
 
-        <!-- 3. CHART SECTION (Masih Statis) -->
+        <!-- 3. CHART SECTION -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
             <div class="flex justify-between items-start mb-8">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900">Transaksi 6 Bulan Terakhir</h3>
-                    <p class="text-sm text-gray-500">Total omzet per bulan.</p>
+                    <p class="text-sm text-gray-500">Omzet dari transaksi lunas dan selesai.</p>
                 </div>
-                <div class="flex bg-gray-100 p-1 rounded-lg">
-                    <button
-                        class="px-4 py-1.5 text-sm font-semibold text-white bg-orange-500 rounded-md shadow-sm">Omzet</button>
-                    <button class="px-4 py-1.5 text-sm font-semibold text-gray-600 hover:text-gray-900">Jumlah
-                        Transaksi</button>
+                <div class="flex gap-2 text-xs">
+                    <span class="px-3 py-1.5 font-semibold text-white bg-orange-500 rounded-md">Omzet</span>
+                    <span class="px-3 py-1.5 font-semibold text-gray-600 bg-gray-100 rounded-md">Jumlah transaksi</span>
                 </div>
             </div>
 
-            <!-- Fake Chart -->
             <div class="h-64 flex items-end justify-between px-4 pb-4 border-b border-gray-200 relative">
                 <div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
                     <div class="border-t border-gray-100 w-full h-0"></div>
@@ -118,45 +119,22 @@
                     <div class="border-t border-gray-100 w-full h-0"></div>
                 </div>
 
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition">Rp
-                        18jt</span>
-                    <div class="w-10 bg-[#143529] rounded-t-md h-32 group-hover:bg-[#1a402f] transition"></div>
-                    <span class="text-xs text-gray-500">Des 2025</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition">Rp
-                        22jt</span>
-                    <div class="w-10 bg-[#143529] rounded-t-md h-40 group-hover:bg-[#1a402f] transition"></div>
-                    <span class="text-xs text-gray-500">Jan</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition">Rp
-                        24jt</span>
-                    <div class="w-10 bg-[#143529] rounded-t-md h-44 group-hover:bg-[#1a402f] transition"></div>
-                    <span class="text-xs text-gray-500">Feb</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition">Rp
-                        28jt</span>
-                    <div class="w-10 bg-[#143529] rounded-t-md h-52 group-hover:bg-[#1a402f] transition"></div>
-                    <span class="text-xs text-gray-500">Mar</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-semibold text-gray-700 opacity-0 group-hover:opacity-100 transition">Rp
-                        31jt</span>
-                    <div class="w-10 bg-[#143529] rounded-t-md h-56 group-hover:bg-[#1a402f] transition"></div>
-                    <span class="text-xs text-gray-500">Apr</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 w-16 relative z-10 group">
-                    <span class="text-xs font-bold text-orange-500">Rp 33.4jt</span>
-                    <div class="w-10 bg-orange-500 rounded-t-md h-60 shadow-lg shadow-orange-500/30"></div>
-                    <span class="text-xs font-bold text-orange-500">Mei</span>
-                </div>
+                @foreach ($dataBulanan as $bulan)
+                    @php($tinggiBatang = $bulan['omzet'] > 0 ? max(2, ($bulan['omzet'] / $omzetMaksimum) * 70) : 0)
+                    <div class="flex flex-col items-center justify-end gap-2 w-16 h-full relative z-10 group">
+                        <span class="text-[10px] font-semibold text-gray-700 text-center">
+                            Rp {{ number_format($bulan['omzet'], 0, ',', '.') }}
+                        </span>
+                        <div class="w-10 bg-[#143529] rounded-t-md group-hover:bg-[#1a402f] transition"
+                            style="height: {{ $tinggiBatang }}%"></div>
+                        <span class="text-xs text-gray-500 text-center">{{ $bulan['label'] }}</span>
+                        <span class="text-[10px] text-gray-400">{{ $bulan['transaksi'] }} trx</span>
+                    </div>
+                @endforeach
             </div>
             <div class="flex justify-between items-center mt-3 text-[11px] text-gray-400">
-                <p>*Data agregat mencakup transaksi sewa alat dan reservasi pemandu terverifikasi.</p>
-                <p>Skala Otomatis (Rp 0 - Rp 40jt)</p>
+                <p>Data dihitung dari transaksi yang berstatus lunas atau selesai.</p>
+                <p>Skala maksimum Rp {{ number_format($omzetMaksimum, 0, ',', '.') }}</p>
             </div>
         </div>
 
@@ -167,7 +145,7 @@
                     <h3 class="text-lg font-bold text-gray-900">Transaksi Terbaru</h3>
                     <p class="text-sm text-gray-500">Daftar transaksi pesanan terakhir yang diproses sistem</p>
                 </div>
-                <a href="#" class="text-sm text-orange-500 font-semibold hover:underline">Lihat Semua Transaksi
+                <a href="{{ route('admin.rekap-transaksi') }}" class="text-sm text-orange-500 font-semibold hover:underline">Lihat Semua Transaksi
                     →</a>
             </div>
             <div class="overflow-x-auto">
@@ -251,7 +229,7 @@
                 @endforelse
             </div>
             <div class="p-4 border-t border-gray-100 text-right">
-                <a href="#" class="text-sm text-orange-500 font-semibold hover:underline">Lihat Semua Log Audit
+                <a href="{{ route('admin.log-audit') }}" class="text-sm text-orange-500 font-semibold hover:underline">Lihat Semua Log Audit
                     →</a>
             </div>
         </div>

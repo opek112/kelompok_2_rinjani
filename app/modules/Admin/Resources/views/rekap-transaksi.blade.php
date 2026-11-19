@@ -53,18 +53,20 @@
                 <table class="w-full text-left text-sm text-gray-600">
                     <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
                         <tr>
+                            <th class="px-6 py-4 font-semibold">Tanggal</th>
                             <th class="px-6 py-4 font-semibold">Kode Pesanan</th>
                             <th class="px-6 py-4 font-semibold">Pemesan</th>
                             <th class="px-6 py-4 font-semibold">Total</th>
+                            <th class="px-6 py-4 font-semibold">Komisi</th>
                             <th class="px-6 py-4 font-semibold">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse($transaksis as $trx)
                             <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 whitespace-nowrap text-xs">{{ $trx->created_at->format('d/m/Y') }}</td>
                                 <td class="px-6 py-4 font-mono text-xs font-bold text-gray-900">{{ $trx->kode_pemesanan }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-xs">{{ $trx->created_at->format('d/m/Y') }}</td>
                                 <td class="px-6 py-4 font-semibold text-gray-900">
                                     {{ $trx->pelanggan ? $trx->pelanggan->nama : $trx->nama_ketua }}
                                 </td>

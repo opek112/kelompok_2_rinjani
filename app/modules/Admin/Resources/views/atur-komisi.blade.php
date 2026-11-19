@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <!-- TABEL RIWAYAT PERUBAHAN (Statis dulu) -->
+            <!-- Riwayat tidak tersedia karena perubahan komisi belum dicatat terpisah di database. -->
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mt-6">
                 <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                     <h3 class="text-lg font-bold text-gray-900">Riwayat Perubahan</h3>
@@ -70,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            @foreach ($riwayat as $row)
+                            @forelse ($riwayat as $row)
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $row['tanggal'] }}</td>
                                     <td class="px-6 py-4">{{ $row['lama'] }}</td>
@@ -79,7 +79,13 @@
                                     </td>
                                     <td class="px-6 py-4 font-semibold text-gray-900">{{ $row['oleh'] }}</td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+                                            Belum ada riwayat perubahan yang tersimpan.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
