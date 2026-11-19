@@ -155,7 +155,7 @@
         </div>
 
         <!-- KANAN: Area Form -->
-        <div class="form-panel w-full lg:w-[55%] flex flex-col p-8 md:p-12 bg-white overflow-y-auto h-screen">
+        <div class="form-panel w-full lg:w-[55%] flex flex-col p-8 md:p-12 bg-white">
             <!-- Header Kanan -->
             <div class="reveal flex items-center justify-between mb-8" style="--d: 60ms">
                 <div class="flex items-center gap-3">

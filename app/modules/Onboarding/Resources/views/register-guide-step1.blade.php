@@ -67,25 +67,38 @@
 
             <!-- Password -->
             <div class="mb-4">
-                <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Kata Sandi</label>
+                <label for="password_guide" class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Kata Sandi</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔒</span>
-                    <input type="password" name="password" required
-                        class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Minimal 8 karakter">
-                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">👁️</span>
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 pointer-events-none">🔒</span>
+                    <input id="password_guide" type="password" name="password" required autocomplete="new-password"
+                        class="w-full pl-10 pr-12 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Minimal 8 karakter">
+
+                    <button type="button" data-toggle-sandi="password_guide"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 focus:outline-none"
+                        aria-label="Tampilkan kata sandi">
+                        <svg data-mata-buka class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <svg data-mata-tutup class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M13.875 18.825A10.05 10.05 0 0 1 12 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 0 1 1.563-3.029m5.858.908a3 3 0 1 1 4.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532 3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0 1 12 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 0 1-4.132 5.411m0 0L21 21"></path></svg>
+                    </button>
                 </div>
                 @error('password') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <!-- Konfirmasi Password -->
             <div class="mb-6">
-                <label class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Konfirmasi Kata Sandi</label>
+                <label for="password_guide_confirm" class="block text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">Konfirmasi Kata Sandi</label>
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔄</span>
-                    <input type="password" name="password_confirmation" required
-                        class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Ulangi kata sandi">
-                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">👁️</span>
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 pointer-events-none">🔄</span>
+                    <input id="password_guide_confirm" type="password" name="password_confirmation" required autocomplete="new-password"
+                        class="w-full pl-10 pr-12 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-sm" placeholder="Ulangi kata sandi">
+
+                    <button type="button" data-toggle-sandi="password_guide_confirm"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-orange-500 focus:outline-none"
+                        aria-label="Tampilkan konfirmasi kata sandi">
+                        <svg data-mata-buka class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <svg data-mata-tutup class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M13.875 18.825A10.05 10.05 0 0 1 12 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 0 1 1.563-3.029m5.858.908a3 3 0 1 1 4.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532 3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0 1 12 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 0 1-4.132 5.411m0 0L21 21"></path></svg>
+                    </button>
                 </div>
+                @error('password_confirmation') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <!-- Checkbox S&K -->
@@ -104,3 +117,20 @@
     
     <p class="text-center text-sm text-gray-600">Sudah punya akun mitra? <a href="{{ route('login') }}" class="text-orange-500 font-semibold hover:underline">Masuk</a></p>
 @endsection
+
+@push('scripts')
+<script>
+    document.querySelectorAll('[data-toggle-sandi]').forEach(function (tombol) {
+        tombol.addEventListener('click', function () {
+            var input = document.getElementById(tombol.dataset.toggleSandi);
+            if (!input) return;
+
+            var tampil = input.type === 'password';
+            input.type = tampil ? 'text' : 'password';
+            tombol.querySelector('[data-mata-buka]').classList.toggle('hidden', tampil);
+            tombol.querySelector('[data-mata-tutup]').classList.toggle('hidden', !tampil);
+            tombol.setAttribute('aria-label', tampil ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
+        });
+    });
+</script>
+@endpush
