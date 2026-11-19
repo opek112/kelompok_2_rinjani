@@ -67,22 +67,11 @@
 
         <!-- KARTU HAK AKSES -->
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-            <h3 class="text-lg font-bold text-gray-900 mb-1">Hak Akses</h3>
-            <p class="text-sm text-gray-500 mb-6">Fitur dan modul yang tersedia untuk peran Anda.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div
-                    class="flex items-center gap-3 bg-green-50 text-green-700 px-4 py-3 rounded-xl border border-green-100">
-                    <span class="text-sm font-semibold">✅ Verifikasi Mitra</span></div>
-                <div
-                    class="flex items-center gap-3 bg-green-50 text-green-700 px-4 py-3 rounded-xl border border-green-100">
-                    <span class="text-sm font-semibold">✅ Atur Komisi</span></div>
-                <div
-                    class="flex items-center gap-3 bg-green-50 text-green-700 px-4 py-3 rounded-xl border border-green-100">
-                    <span class="text-sm font-semibold">✅ Rekap Transaksi</span></div>
-                <div
-                    class="flex items-center gap-3 bg-green-50 text-green-700 px-4 py-3 rounded-xl border border-green-100">
-                    <span class="text-sm font-semibold">✅ Moderasi Katalog</span></div>
-            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-1">Peran Akun</h3>
+            <p class="text-sm text-gray-500 mb-4">Peran yang tersimpan pada akun Anda.</p>
+            <span class="inline-flex items-center bg-green-50 text-green-700 border border-green-100 px-4 py-2 rounded-xl text-sm font-semibold">
+                {{ ucfirst(Auth::user()->peran) }}
+            </span>
         </div>
     </div>
 

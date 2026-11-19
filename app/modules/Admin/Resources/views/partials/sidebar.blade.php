@@ -46,7 +46,11 @@
                     </path>
                 </svg>
                 Verifikasi Mitra
-                <span class="ml-auto bg-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">2</span>
+                @if ($totalPendingMitra > 0)
+                    <span class="ml-auto bg-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                        {{ $totalPendingMitra }}
+                    </span>
+                @endif
             </a>
             <!-- Atur Komisi -->
             <a href="{{ route('admin.atur-komisi') }}"
