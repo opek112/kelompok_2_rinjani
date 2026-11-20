@@ -3,6 +3,7 @@
 namespace Modules\Admin\Services;
 use Modules\Payment\Models\Pembayaran;
 use Modules\Booking\Models\Pemesanan;
+use Modules\Guide\Services\JadwalPemanduService;
 
 use Illuminate\Support\Facades\DB;
 
@@ -18,8 +19,8 @@ class PemesananService
             // 2. Ubah status pembayaran menjadi settlement (jika belum)
             $pembayaran->update(['status_pembayaran' => 'settlement', 'dibayar_pada' => now()]);
 
-            // 3. Kunci jadwal pemandu (contoh logika sederhana)
-            // Nanti bisa ditambahkan query ke tabel ketersediaan_pemandu
+            // 3. Kunci jadwal pemandu pada kalender ketersediaan.
+            JadwalPemanduService::kunci($pemesanan);
 
             // 4. Potong stok rental (contoh logika sederhana)
             // Nanti bisa ditambahkan query ke tabel peralatan

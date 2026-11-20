@@ -7,6 +7,7 @@ use Modules\Payment\Services\MidtransService; // <-- Pakai Modules\Payment
 use Modules\Admin\Services\PemesananService; // <-- PASTIKAN INI ADA
 use Modules\Payment\Models\Pembayaran; // <-- Pakai Modules\Payment
 use Modules\Payment\Models\LogPembayaran; // <-- Pakai Modules\Payment
+use Modules\Guide\Services\JadwalPemanduService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -81,6 +82,10 @@ class PaymentWebhookController extends Controller
             $pembayaran->update([
                 'status_pembayaran' => $status,
             ]);
+
+            if (in_array($status, ['expire', 'failure'], true) && $pembayaran->pemesanan !== null) {
+                JadwalPemanduService::lepas($pembayaran->pemesanan);
+            }
         });
 
         return response()->json(['message' => 'Webhook berhasil diproses']);

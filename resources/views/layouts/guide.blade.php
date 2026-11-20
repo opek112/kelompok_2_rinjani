@@ -7,12 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Dashboard Pemandu' }} - RinjaniGuide</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.tema-gelap')
 </head>
 
 <body class="font-sans antialiased bg-gray-50 flex h-screen overflow-hidden">
 
     <!-- SIDEBAR KIRI -->
-    <aside class="w-64 bg-[#1e4035] text-white flex flex-col justify-between hidden md:flex flex-shrink-0">
+    <aside class="w-64 bg-gradient-to-b from-[#1e4035] to-[#15291f] text-white flex flex-col justify-between hidden md:flex flex-shrink-0 shadow-xl">
         <div>
             <!-- Logo -->
             <div class="p-6 flex items-center gap-3">
@@ -74,13 +75,18 @@
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
 
         <!-- NAVBAR ATAS -->
-        <header class="bg-white border-b border-gray-200 h-20 flex items-center justify-between px-8 flex-shrink-0">
+        <header class="bg-white/95 backdrop-blur border-b border-gray-200 h-20 flex items-center justify-between px-8 flex-shrink-0 relative z-30">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">{{ $header ?? 'Dashboard' }}</h1>
                 <p class="text-xs text-gray-500 mt-1">{{ $subheader ?? '' }}</p>
             </div>
 
             <div class="flex items-center gap-4">
+                <button type="button" onclick="gantiTema()" title="Mode terang / gelap" aria-label="Ganti tema"
+                    class="w-10 h-10 rounded-full border border-gray-200 text-gray-500 hover:text-orange-500 hover:border-orange-300 flex items-center justify-center transition">
+                    <i class="fa-solid fa-moon text-sm ikon-terang"></i>
+                    <i class="fa-solid fa-sun text-sm ikon-gelap"></i>
+                </button>
                 <!-- Notifikasi -->
                 <a href="{{ route('guide.schedule') }}" class="relative cursor-pointer group">
                     <span class="text-xl group-hover:opacity-80">🔔</span>

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Modules\Booking\Models\Pemesanan;
+use Modules\Guide\Services\JadwalPemanduService;
 
 class PaymentController extends Controller
 {
@@ -38,6 +39,7 @@ class PaymentController extends Controller
         if ($sisaDetik <= 0 && $pemesanan->status === 'pending' && $demo === '') {
             $pemesanan->update(['status' => 'expired']);
             $pembayaran->update(['status_pembayaran' => 'expire']);
+            JadwalPemanduService::lepas($pemesanan);
         }
 
         $state = match (true) {
@@ -73,6 +75,7 @@ class PaymentController extends Controller
         if (! $pembayaran || now()->greaterThan($pembayaran->kedaluwarsa_pada)) {
             $pemesanan->update(['status' => 'expired']);
             $pembayaran?->update(['status_pembayaran' => 'expire']);
+            JadwalPemanduService::lepas($pemesanan);
 
             return redirect()
                 ->route('rental.payment', $kode)
@@ -85,6 +88,8 @@ class PaymentController extends Controller
             'dibayar_pada' => now(),
         ]);
 
+        JadwalPemanduService::kunci($pemesanan);
+
         return redirect()->route('rental.voucher', $kode);
     }
 
@@ -95,6 +100,7 @@ class PaymentController extends Controller
         if ($pemesanan->status === 'pending') {
             $pemesanan->update(['status' => 'cancelled']);
             $pemesanan->pembayaran?->update(['status_pembayaran' => 'expire']);
+            JadwalPemanduService::lepas($pemesanan);
         }
 
         return redirect()
@@ -122,7 +128,7 @@ class PaymentController extends Controller
     private function cariPemesanan(string $kode): Pemesanan
     {
         return Pemesanan::query()
-            ->with(['items.peralatan.toko', 'pembayaran'])
+            ->with(['items.peralatan.toko', 'pembayaran', 'pemandu.user'])
             ->where('kode_pemesanan', $kode)
             ->firstOrFail();
     }

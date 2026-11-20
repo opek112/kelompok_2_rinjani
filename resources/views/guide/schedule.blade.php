@@ -52,7 +52,7 @@
             };
         @endphp
 
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-4">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-4 kartu-modern">
             <div class="flex justify-between items-start mb-4 border-b border-gray-100 pb-4">
                 <div class="flex gap-4 text-xs text-gray-500 font-medium">
                     <span># {{ $pesanan->kode_pemesanan }}</span>
@@ -89,6 +89,17 @@
                         class="w-full {{ $bisaKonfirmasi ? 'bg-orange-500 hover:bg-orange-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }} py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2">
                         {{ $pesanan->kehadiran_pemandu_dikonfirmasi ? '👁️ Lihat Detail' : ($bisaKonfirmasi ? '✔️ Konfirmasi Serah Terima' : '👁️ Lihat Detail') }}
                     </a>
+
+                    @if ($pesanan->status === 'paid' && $pesanan->kehadiran_pemandu_dikonfirmasi)
+                        <form method="POST" action="{{ route('guide.assignment.selesai', $pesanan) }}"
+                            onsubmit="return confirm('Tandai perjalanan {{ $pesanan->kode_pemesanan }} selesai?')">
+                            @csrf
+                            <button type="submit"
+                                class="w-full border border-[#1e4035] text-[#1e4035] py-2 rounded-lg text-sm font-bold hover:bg-gray-100 flex items-center justify-center gap-2">
+                                🏁 Tandai Selesai
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 

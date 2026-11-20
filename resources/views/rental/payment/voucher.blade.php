@@ -115,6 +115,24 @@
                     </div>
                 </div>
 
+                @if ($pemesanan->pemandu_id !== null)
+                    <h2 class="font-bold text-brand-dark flex items-center gap-2 mt-6">
+                        <i class="fa-solid fa-person-hiking text-brand-orange"></i> Pemandu Pendamping
+                        <span class="ml-auto bg-green-100 text-green-700 text-[10px] font-bold px-2.5 py-1 rounded">Terjadwal</span>
+                    </h2>
+                    <div class="border border-gray-200 rounded-xl p-4 mt-3 flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-brand-dark">{{ $pemesanan->pemandu?->user?->nama ?? 'Pemandu' }}</p>
+                            <p class="text-[11px] text-gray-500 mt-1">
+                                Lisensi {{ $pemesanan->pemandu?->nomor_lisensi ?: '-' }} · Jalur {{ $pemesanan->rute ?? '-' }}
+                            </p>
+                            <p class="text-[11px] text-gray-500">Meeting point: Basecamp {{ $pemesanan->rute ?? 'Sembalun' }} (07.00 WITA)</p>
+                        </div>
+                        <span class="bg-gray-50 border border-gray-200 text-brand-dark text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap">{{ $pemesanan->total_hari }} Hari</span>
+                    </div>
+                @endif
+
+                @if ($pemesanan->items->isNotEmpty())
                 <!-- Peralatan -->
                 <h2 class="font-bold text-brand-dark flex items-center gap-2 mt-6">
                     <i class="fa-solid fa-tent text-brand-orange"></i> Sewa Perlengkapan Outdoor
@@ -135,6 +153,7 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
             </div>
 
             <!-- Barcode -->

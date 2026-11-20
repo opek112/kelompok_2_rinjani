@@ -16,7 +16,9 @@
         use Modules\Rental\Support\Tanggal;
 
         $subtotalAlat = $pemesanan->items->sum('subtotal');
-        $biayaLayanan = max(0, $pembayaran->nominal - $subtotalAlat);
+        $biayaPemandu = (float) ($pemesanan->biaya_pemandu_snapshot ?? 0);
+        $isPemandu = $pemesanan->pemandu_id !== null;
+        $biayaLayanan = max(0, $pembayaran->nominal - $subtotalAlat - $biayaPemandu);
         $jumlahUnit = $pemesanan->items->sum('jumlah');
     @endphp
 
@@ -194,19 +196,31 @@
 
                         <!-- Rincian -->
                         <div class="border border-gray-200 rounded-xl p-4 text-sm space-y-2">
-                            @foreach ($pemesanan->items as $item)
+                            @if ($isPemandu)
                                 <div class="flex justify-between gap-3 text-gray-600">
                                     <span class="min-w-0">
-                                        <span class="block truncate">Sewa Alat ({{ $item->peralatan?->nama }})</span>
-                                        <span class="text-[10px] text-gray-400">{{ $item->jumlah }} unit × {{ $pemesanan->total_hari }} hari</span>
+                                        <span class="block truncate">Jasa Pemandu ({{ $pemesanan->pemandu?->user?->nama ?? 'Pemandu' }})</span>
+                                        <span class="text-[10px] text-gray-400">{{ $pemesanan->total_hari }} hari · jalur {{ $pemesanan->rute ?? '-' }}</span>
                                     </span>
-                                    <span class="font-semibold text-brand-dark whitespace-nowrap">{{ Rupiah::format($item->subtotal) }}</span>
+                                    <span class="font-semibold text-brand-dark whitespace-nowrap">{{ Rupiah::format($biayaPemandu) }}</span>
                                 </div>
-                            @endforeach
-                            <div class="flex justify-between text-gray-600">
-                                <span>Biaya Layanan TNGR Protection</span>
-                                <span class="font-semibold text-brand-dark">{{ Rupiah::format($biayaLayanan) }}</span>
-                            </div>
+                            @else
+                                @foreach ($pemesanan->items as $item)
+                                    <div class="flex justify-between gap-3 text-gray-600">
+                                        <span class="min-w-0">
+                                            <span class="block truncate">Sewa Alat ({{ $item->peralatan?->nama }})</span>
+                                            <span class="text-[10px] text-gray-400">{{ $item->jumlah }} unit × {{ $pemesanan->total_hari }} hari</span>
+                                        </span>
+                                        <span class="font-semibold text-brand-dark whitespace-nowrap">{{ Rupiah::format($item->subtotal) }}</span>
+                                    </div>
+                                @endforeach
+                            @endif
+                            @if ($biayaLayanan > 0)
+                                <div class="flex justify-between text-gray-600">
+                                    <span>Biaya Layanan TNGR Protection</span>
+                                    <span class="font-semibold text-brand-dark">{{ Rupiah::format($biayaLayanan) }}</span>
+                                </div>
+                            @endif
                             <div class="flex justify-between items-center border-t border-gray-100 pt-3 mt-1">
                                 <span class="font-bold text-brand-dark">Total Pembayaran</span>
                                 <span class="font-bold text-brand-orange text-xl">{{ Rupiah::format($pembayaran->nominal) }}</span>
@@ -220,8 +234,8 @@
                                 <span>{{ $pembayaran->kedaluwarsa_pada->format('H:i') }} WIB ({{ Tanggal::panjang($pembayaran->kedaluwarsa_pada) }})</span>
                             </div>
                             <div class="flex justify-between text-[11px] text-gray-500">
-                                <span>Jumlah Unit Disewa</span>
-                                <span>{{ $jumlahUnit }} unit · {{ $pemesanan->total_hari }} hari</span>
+                                <span>{{ $isPemandu ? 'Durasi Pendampingan' : 'Jumlah Unit Disewa' }}</span>
+                                <span>{{ $isPemandu ? $pemesanan->total_hari.' hari' : $jumlahUnit.' unit · '.$pemesanan->total_hari.' hari' }}</span>
                             </div>
                         </div>
 

@@ -96,7 +96,14 @@ class PartnerRegistrationController extends Controller
         $pathSertifikat = $request->file('file_sertifikat')->store('dokumen/sertifikat', 'public');
         $pathKtp = $request->file('file_ktp')->store('dokumen/ktp', 'public');
 
-        $step2 = session('guide_step2', []);
+        $step2 = session('guide_step2');
+
+        // POST langsung tanpa data langkah 2 tidak boleh membuat profil kosong.
+        if (! $step2) {
+            return redirect()
+                ->route('register.guide.step2')
+                ->with('error', 'Data kepemanduan belum lengkap. Silakan isi langkah 2 terlebih dahulu.');
+        }
 
         $user = DB::transaction(function () use ($step1, $step2, $pathSertifikat, $pathKtp, $request) {
             $user = User::create([
@@ -209,7 +216,13 @@ class PartnerRegistrationController extends Controller
         // Simpan file
         $pathLegalitas = $request->file('file_legalitas')->store('dokumen/legalitas', 'public');
 
-        $step2 = session('rental_step2', []);
+        $step2 = session('rental_step2');
+
+        if (! $step2) {
+            return redirect()
+                ->route('register.rental.step2')
+                ->with('error', 'Data toko belum lengkap. Silakan isi langkah 2 terlebih dahulu.');
+        }
 
         $user = DB::transaction(function () use ($step1, $step2, $pathLegalitas, $request) {
             $user = User::create([

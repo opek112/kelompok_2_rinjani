@@ -231,6 +231,23 @@
                     </div>
                 </div>
 
+                @if ($pemesanan->status === 'paid' && $pemesanan->kehadiran_pemandu_dikonfirmasi)
+                    <form method="POST" action="{{ route('guide.assignment.selesai', $pemesanan) }}" class="mt-6"
+                        onsubmit="return confirm('Tandai perjalanan ini selesai? Pendapatan akan masuk ke rekap.')">
+                        @csrf
+                        <button type="submit"
+                            class="w-full bg-[#1e4035] text-white font-bold py-3 rounded-lg hover:opacity-90 transition">
+                            🏁 Tandai Perjalanan Selesai
+                        </button>
+                    </form>
+                @endif
+
+                @if ($pemesanan->status === 'completed')
+                    <p class="mt-6 text-xs font-bold text-green-700 bg-green-50 border border-green-200 rounded-lg p-3 text-left">
+                        ✅ Perjalanan ini sudah ditandai selesai dan masuk ke rekap pendapatan.
+                    </p>
+                @endif
+
                 <p class="text-xs text-gray-500 mt-6 bg-green-50 border border-green-100 rounded-lg p-3 text-left">
                     ℹ️ Pengingat APGI: Laporkan posisi pos istirahat secara berkala melalui radio komunikasi atau koordinasi Basecamp.
                 </p>

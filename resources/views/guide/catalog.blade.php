@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="bg-brand-dark text-white py-14 px-4">
+    <section class="bg-gradient-to-br from-brand-dark via-brand-green to-[#20402f] text-white py-14 px-4">
         <div class="max-w-7xl mx-auto">
             <span class="inline-block bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold mb-4">
                 <i class="fa-solid fa-person-hiking mr-2 text-brand-orange"></i>Pemandu Berlisensi TNGR & APGI
@@ -56,7 +56,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($daftar as $pemandu)
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
+                <div class="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col kartu-modern">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-16 h-16 bg-brand-dark text-white rounded-full flex items-center justify-center text-xl font-bold flex-shrink-0">
                             {{ $pemandu->inisial() }}

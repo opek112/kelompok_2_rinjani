@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Modules\Booking\Models\Pemesanan;
-use Modules\Guide\Models\Ketersediaan;
+use Modules\Guide\Services\JadwalPemanduService;
 
 class AssignmentController extends GuideController
 {
@@ -104,14 +104,7 @@ class AssignmentController extends GuideController
                 'waktu_serah_terima' => $pemesanan->waktu_serah_terima ?? now(),
             ]);
 
-            if ($pemesanan->pemandu_id !== null) {
-                for ($hari = $pemesanan->tanggal_mulai->copy(); $hari->lte($pemesanan->tanggal_selesai); $hari->addDay()) {
-                    Ketersediaan::updateOrCreate(
-                        ['pemandu_id' => $pemesanan->pemandu_id, 'tanggal' => $hari->toDateString()],
-                        ['status' => 'booked', 'pemesanan_id' => $pemesanan->id]
-                    );
-                }
-            }
+            JadwalPemanduService::kunci($pemesanan);
         });
 
         return redirect()
@@ -120,18 +113,55 @@ class AssignmentController extends GuideController
     }
 
     /**
+     * Tandai perjalanan selesai setelah serah terima dikonfirmasi.
+     */
+    public function selesaikan(Pemesanan $pemesanan): RedirectResponse
+    {
+        $this->authorize('view', $pemesanan);
+
+        if ($pemesanan->status === 'completed') {
+            return back()->with('error', 'Perjalanan ini sudah ditandai selesai.');
+        }
+
+        if ($pemesanan->status !== 'paid') {
+            return back()->with('error', 'Perjalanan hanya dapat diselesaikan untuk pesanan yang sudah dibayar.');
+        }
+
+        if (! $pemesanan->kehadiran_pemandu_dikonfirmasi) {
+            return back()->with('error', 'Konfirmasi serah terima harus diselesaikan terlebih dahulu.');
+        }
+
+        if (today()->lt($pemesanan->tanggal_mulai)) {
+            return back()->with('error', 'Perjalanan belum dimulai sesuai tanggal pendakian.');
+        }
+
+        $pemesanan->update(['status' => 'completed']);
+
+        return redirect()
+            ->route('guide.schedule', ['tab' => 'selesai'])
+            ->with('success', 'Perjalanan '.$pemesanan->kode_pemesanan.' ditandai selesai. Pendapatan sudah masuk rekap.');
+    }
+
+    /**
      * Akses berkas KTP pemesan, hanya untuk pemandu yang ditugaskan (Policy).
+     * Berkas disimpan pada disk privat "local" saat checkout.
      */
     public function ktp(Pemesanan $pemesanan)
     {
         $this->authorize('viewKtp', $pemesanan);
 
-        abort_unless(
-            filled($pemesanan->path_foto_ktp) && Storage::disk('public')->exists($pemesanan->path_foto_ktp),
-            404,
-            'Berkas KTP tidak ditemukan.'
-        );
+        $path = $pemesanan->path_foto_ktp;
+        $disk = null;
 
-        return Storage::disk('public')->response($pemesanan->path_foto_ktp);
+        foreach (['local', 'public'] as $kandidat) {
+            if (filled($path) && Storage::disk($kandidat)->exists($path)) {
+                $disk = $kandidat;
+                break;
+            }
+        }
+
+        abort_if($disk === null, 404, 'Berkas KTP tidak ditemukan.');
+
+        return Storage::disk($disk)->response($path);
     }
 }

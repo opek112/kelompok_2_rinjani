@@ -71,7 +71,7 @@ class KetersediaanService
 
         $penugasan = Pemesanan::query()
             ->where('pemandu_id', $idPemandu)
-            ->whereIn('status', ['paid', 'completed'])
+            ->whereIn('status', ['pending', 'paid', 'completed'])
             ->whereDate('tanggal_mulai', '<=', $akhir->toDateString())
             ->whereDate('tanggal_selesai', '>=', $awal->toDateString())
             ->get(['tanggal_mulai', 'tanggal_selesai']);
@@ -101,7 +101,7 @@ class KetersediaanService
     {
         return Pemesanan::query()
             ->where('pemandu_id', $idPemandu)
-            ->whereIn('status', ['paid', 'completed'])
+            ->whereIn('status', ['pending', 'paid', 'completed'])
             ->whereDate('tanggal_mulai', '<=', $selesai->toDateString())
             ->whereDate('tanggal_selesai', '>=', $mulai->toDateString())
             ->exists();

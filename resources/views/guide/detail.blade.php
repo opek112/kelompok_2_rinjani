@@ -64,8 +64,8 @@
 
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
                 <h2 class="text-lg font-bold text-brand-dark mb-4">Ajukan Pemesanan</h2>
-                <p class="text-sm text-gray-600 mb-6">
-                    Hubungi pemandu untuk menanyakan ketersediaan tanggal pendakian Anda, atau masuk untuk melanjutkan pemesanan.
+                <p class="text-sm text-gray-600 mb-5">
+                    Pilih tanggal pendakian, lalu lanjutkan pemesanan dan pembayaran QRIS. Jadwal otomatis dikunci setelah lunas.
                 </p>
 
                 @php
@@ -75,17 +75,31 @@
                     }
                 @endphp
 
+                <form method="GET" action="{{ route('guide.booking.create', $pemandu) }}" class="space-y-3 mb-4">
+                    <div>
+                        <label for="tanggal_mulai" class="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1">Tanggal Mulai</label>
+                        <input type="date" id="tanggal_mulai" name="tanggal_mulai" min="{{ today()->toDateString() }}"
+                            value="{{ today()->addDay()->toDateString() }}"
+                            class="w-full rounded-lg border-gray-300 text-sm focus:ring-brand-orange focus:border-brand-orange">
+                    </div>
+                    <div>
+                        <label for="tanggal_selesai" class="block text-[11px] font-bold uppercase tracking-wider text-gray-500 mb-1">Tanggal Selesai</label>
+                        <input type="date" id="tanggal_selesai" name="tanggal_selesai" min="{{ today()->toDateString() }}"
+                            value="{{ today()->addDays(2)->toDateString() }}"
+                            class="w-full rounded-lg border-gray-300 text-sm focus:ring-brand-orange focus:border-brand-orange">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-brand-orange text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-sm">
+                        <i class="fa-solid fa-calendar-check mr-2"></i> Pesan Pemandu
+                    </button>
+                </form>
+
                 @if ($telepon !== '')
                     <a href="https://wa.me/{{ $telepon }}" target="_blank" rel="noopener"
-                        class="block text-center w-full bg-green-600 text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-green-700 transition mb-3">
-                        <i class="fa-brands fa-whatsapp mr-2"></i> Hubungi via WhatsApp
+                        class="block text-center w-full border border-green-600 text-green-700 bg-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-green-50 transition">
+                        <i class="fa-brands fa-whatsapp mr-2"></i> Tanya via WhatsApp
                     </a>
                 @endif
-
-                <a href="{{ auth()->check() ? route('dashboard') : route('login') }}"
-                    class="block text-center w-full border border-brand-dark text-brand-dark px-5 py-3 rounded-lg text-sm font-bold hover:bg-brand-dark hover:text-white transition">
-                    {{ auth()->check() ? 'Buka Dashboard' : 'Masuk untuk Memesan' }}
-                </a>
 
                 <div class="border-t border-gray-100 mt-6 pt-4 text-sm text-gray-600 space-y-2">
                     <p><i class="fa-solid fa-shield-halved text-brand-orange mr-2"></i>Diverifikasi admin RinjaniGuide</p>

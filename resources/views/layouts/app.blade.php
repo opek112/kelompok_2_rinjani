@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RinjaniGuide & Rental</title>
+    @include('partials.tema-gelap')
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -16,6 +17,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
@@ -76,6 +78,11 @@
 
                 <!-- Bagian Kanan (Auth / Profile) -->
                 <div class="hidden md:flex items-center space-x-4">
+                    <button type="button" onclick="gantiTema()" title="Mode terang / gelap" aria-label="Ganti tema"
+                        class="w-9 h-9 rounded-full border border-white/20 bg-white/5 text-gray-200 hover:bg-white/15 transition flex items-center justify-center">
+                        <i class="fa-solid fa-moon text-sm ikon-terang"></i>
+                        <i class="fa-solid fa-sun text-sm ikon-gelap"></i>
+                    </button>
                     <a href="{{ route('rental.cart') }}" class="relative text-gray-300 hover:text-white transition" title="Keranjang Rental">
                         <i class="fa-solid fa-cart-shopping text-xl"></i>
                         @if (array_sum(session('rental_cart.items', [])) > 0)

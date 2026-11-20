@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'RinjaniGuide & Rental')</title>
+    @include('partials.tema-gelap')
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -11,6 +12,7 @@
 
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
@@ -57,6 +59,11 @@
             </div>
 
             <div class="flex items-center gap-4">
+                <button type="button" onclick="gantiTema()" title="Mode terang / gelap" aria-label="Ganti tema"
+                    class="w-9 h-9 rounded-full border border-gray-200 text-gray-500 hover:text-brand-orange flex items-center justify-center transition no-print">
+                    <i class="fa-solid fa-moon text-sm ikon-terang"></i>
+                    <i class="fa-solid fa-sun text-sm ikon-gelap"></i>
+                </button>
                 @yield('header-right')
                 <a href="{{ route('home') }}" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 no-print" aria-label="Tutup">
                     <i class="fa-solid fa-xmark"></i>
